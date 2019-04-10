@@ -9,6 +9,7 @@ export default class splashScreen extends Component {
     return (
       <View style={styles.container}>
         <Image resizeMode={'contain'} style={styles.img} source={require('../../img/logo.jpeg')} />
+
       </View>
     );
   }
