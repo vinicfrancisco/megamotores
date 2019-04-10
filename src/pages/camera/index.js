@@ -41,8 +41,9 @@ class camera extends Component {
 
   takePicture = async function () {
     if (this.camera) {
-      const options = { 
-        quality: 1 };
+      const options = {
+        quality: 1
+      };
       const data = await this.camera.takePictureAsync(options);
       await this.props.addImage(data);
       await Actions.pop('newDangerZone');
