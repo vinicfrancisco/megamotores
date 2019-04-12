@@ -1,5 +1,7 @@
-import store from './store/';
+import './config/ReactotronConfig';
+import { store, persistor } from './store/';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Router, Stack, Scene, Actions } from "react-native-router-flux";
@@ -41,134 +43,136 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
-          <Stack key={"root"}>
-            <Scene
-              initial={this.state.loading && true}
-              hideNavBar
-              component={splashScreen}
-              key={"splashScreen"} />
+        <PersistGate loading={null} persistor={persistor}>
+          <Router>
+            <Stack key={"root"}>
+              <Scene
+                initial={this.state.loading && true}
+                hideNavBar
+                component={splashScreen}
+                key={"splashScreen"} />
 
-            <Scene
-              initial={!this.state.loading && !this.state.isLogged && true}
-              component={login}
-              hideNavBar
-              key={"login"} />
+              <Scene
+                initial={!this.state.loading && !this.state.isLogged && true}
+                component={login}
+                hideNavBar
+                key={"login"} />
 
-            <Scene
-              hideNavBar
-              key={'camera'}
-              component={camera}
-            />
+              <Scene
+                hideNavBar
+                key={'camera'}
+                component={camera}
+              />
 
-            <Scene
-              initial={!this.state.loading && this.state.isLogged && true}
-              component={homePage}
-              renderRightButton={
-                <TouchableOpacity onPress={() => Actions.push('newReport')}>
-                  <Icon name={'plus'} size={25} color={colors.white} style={{ marginRight: metrics.baseMargin }} />
-                </TouchableOpacity>
-              }
-              navigationBarStyle={{ backgroundColor: colors.primary }}
-              key={"homepage"}
-              title={"Meus relatórios"}
-              titleStyle={{ color: colors.white }} />
+              <Scene
+                initial={!this.state.loading && this.state.isLogged && true}
+                component={homePage}
+                renderRightButton={
+                  <TouchableOpacity onPress={() => Actions.push('newReport')}>
+                    <Icon name={'plus'} size={25} color={colors.white} style={{ marginRight: metrics.baseMargin }} />
+                  </TouchableOpacity>
+                }
+                navigationBarStyle={{ backgroundColor: colors.primary }}
+                key={"homepage"}
+                title={"Meus relatórios"}
+                titleStyle={{ color: colors.white }} />
 
-            <Scene
-              component={newReport}
-              navigationBarStyle={{ backgroundColor: colors.primary }}
-              key={"newReport"}
-              title={"Checklist NR-12"}
-              renderLeftButton={
-                <TouchableOpacity onPress={() => Actions.pop('homePage')}>
-                  <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
-                </TouchableOpacity>
-              }
-              titleStyle={{ color: colors.white }} />
+              <Scene
+                component={newReport}
+                navigationBarStyle={{ backgroundColor: colors.primary }}
+                key={"newReport"}
+                title={"Checklist NR-12"}
+                renderLeftButton={
+                  <TouchableOpacity onPress={() => Actions.pop('homePage')}>
+                    <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
+                  </TouchableOpacity>
+                }
+                titleStyle={{ color: colors.white }} />
 
-            <Scene
-              component={dangerZones}
-              navigationBarStyle={{ backgroundColor: colors.primary }}
-              key={"dangerZones"}
-              title={"Zonas de pergio"}
-              titleStyle={{ color: colors.white }}
-              renderRightButton={
-                <TouchableOpacity onPress={() => Actions.push('newDangerZone')}>
-                  <Icon name={'plus'} style={{ marginRight: metrics.baseMargin }} size={25} color={colors.white} />
-                </TouchableOpacity>
-              }
-              renderLeftButton={
-                <TouchableOpacity onPress={() => Actions.pop('newReport')}>
-                  <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
-                </TouchableOpacity>
-              } />
+              <Scene
+                component={dangerZones}
+                navigationBarStyle={{ backgroundColor: colors.primary }}
+                key={"dangerZones"}
+                title={"Zonas de pergio"}
+                titleStyle={{ color: colors.white }}
+                renderRightButton={
+                  <TouchableOpacity onPress={() => Actions.push('newDangerZone')}>
+                    <Icon name={'plus'} style={{ marginRight: metrics.baseMargin }} size={25} color={colors.white} />
+                  </TouchableOpacity>
+                }
+                renderLeftButton={
+                  <TouchableOpacity onPress={() => Actions.pop('newReport')}>
+                    <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
+                  </TouchableOpacity>
+                } />
 
-            <Scene
-              component={newDangerZone}
-              navigationBarStyle={{ backgroundColor: colors.primary }}
-              key={"newDangerZone"}
-              title={"Nova zona de perigo"}
-              titleStyle={{ color: colors.white }}
-              renderLeftButton={
-                <TouchableOpacity onPress={() => Actions.pop()}>
-                  <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
-                </TouchableOpacity>
-              }
-              rightButtonTextStyle={{ color: 'white' }}
-              leftButtonTextStyle={{ color: 'white' }}
-              onRight={() => { }}
-              rightTitle={'Próximo'} />
-            <Scene
-              component={initialHrn}
-              navigationBarStyle={{ backgroundColor: colors.primary }}
-              key={"initialHrn"}
-              title={"Nova zona de perigo"}
-              titleStyle={{ color: colors.white }}
-              renderLeftButton={
-                <TouchableOpacity onPress={() => Actions.pop()}>
-                  <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
-                </TouchableOpacity>
-              }
-              rightButtonTextStyle={{ color: 'white' }}
-              leftButtonTextStyle={{ color: 'white' }}
-              onRight={() => { }}
-              rightTitle={'Próximo'} />
+              <Scene
+                component={newDangerZone}
+                navigationBarStyle={{ backgroundColor: colors.primary }}
+                key={"newDangerZone"}
+                title={"Nova zona de perigo"}
+                titleStyle={{ color: colors.white }}
+                renderLeftButton={
+                  <TouchableOpacity onPress={() => Actions.pop()}>
+                    <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
+                  </TouchableOpacity>
+                }
+                rightButtonTextStyle={{ color: 'white' }}
+                leftButtonTextStyle={{ color: 'white' }}
+                onRight={() => { }}
+                rightTitle={'Próximo'} />
+              <Scene
+                component={initialHrn}
+                navigationBarStyle={{ backgroundColor: colors.primary }}
+                key={"initialHrn"}
+                title={"Nova zona de perigo"}
+                titleStyle={{ color: colors.white }}
+                renderLeftButton={
+                  <TouchableOpacity onPress={() => Actions.pop()}>
+                    <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
+                  </TouchableOpacity>
+                }
+                rightButtonTextStyle={{ color: 'white' }}
+                leftButtonTextStyle={{ color: 'white' }}
+                onRight={() => { }}
+                rightTitle={'Próximo'} />
 
-            <Scene
-              component={reduction}
-              navigationBarStyle={{ backgroundColor: colors.primary }}
-              key={"reduction"}
-              title={"Nova zona de perigo"}
-              titleStyle={{ color: colors.white }}
-              renderLeftButton={
-                <TouchableOpacity onPress={() => Actions.pop()}>
-                  <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
-                </TouchableOpacity>
-              }
-              rightButtonTextStyle={{ color: 'white' }}
-              leftButtonTextStyle={{ color: 'white' }}
-              onRight={() => { }}
-              rightTitle={'Próximo'} />
+              <Scene
+                component={reduction}
+                navigationBarStyle={{ backgroundColor: colors.primary }}
+                key={"reduction"}
+                title={"Nova zona de perigo"}
+                titleStyle={{ color: colors.white }}
+                renderLeftButton={
+                  <TouchableOpacity onPress={() => Actions.pop()}>
+                    <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
+                  </TouchableOpacity>
+                }
+                rightButtonTextStyle={{ color: 'white' }}
+                leftButtonTextStyle={{ color: 'white' }}
+                onRight={() => { }}
+                rightTitle={'Próximo'} />
 
-            <Scene
-              component={finalHrn}
-              navigationBarStyle={{ backgroundColor: colors.primary }}
-              key={"finalHrn"}
-              title={"Nova zona de perigo"}
-              renderLeftButton={
-                <TouchableOpacity onPress={() => Actions.pop()}>
-                  <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
-                </TouchableOpacity>
-              }
-              titleStyle={{ color: colors.white }}
-              rightButtonTextStyle={{ color: 'white' }}
-              leftButtonTextStyle={{ color: 'white' }}
-              onRight={() => {
-                Actions.push('dangerZones')
-              }}
-              rightTitle={'Salvar'} />
-          </Stack>
-        </Router>
+              <Scene
+                component={finalHrn}
+                navigationBarStyle={{ backgroundColor: colors.primary }}
+                key={"finalHrn"}
+                title={"Nova zona de perigo"}
+                renderLeftButton={
+                  <TouchableOpacity onPress={() => Actions.pop()}>
+                    <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
+                  </TouchableOpacity>
+                }
+                titleStyle={{ color: colors.white }}
+                rightButtonTextStyle={{ color: 'white' }}
+                leftButtonTextStyle={{ color: 'white' }}
+                onRight={() => {
+                  Actions.push('dangerZones')
+                }}
+                rightTitle={'Salvar'} />
+            </Stack>
+          </Router>
+        </PersistGate>
       </Provider>
     );
   }
