@@ -87,6 +87,9 @@ export default class App extends Component {
                     <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
                   </TouchableOpacity>
                 }
+                rightButtonTextStyle={{ color: 'white' }}
+                onRight={() => { }}
+                rightTitle={'Gerar PDF'}
                 titleStyle={{ color: colors.white }} />
 
               <Scene
@@ -117,8 +120,8 @@ export default class App extends Component {
                     <Ionicons name={'ios-arrow-back'} size={25} color={colors.white} style={{ marginLeft: metrics.baseMargin }} />
                   </TouchableOpacity>
                 }
-                rightButtonTextStyle={{ color: 'white' }}
                 leftButtonTextStyle={{ color: 'white' }}
+                rightButtonTextStyle={{ color: 'white' }}
                 onRight={() => { }}
                 rightTitle={'Próximo'} />
               <Scene

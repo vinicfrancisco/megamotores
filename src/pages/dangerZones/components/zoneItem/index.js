@@ -1,15 +1,20 @@
 import React from 'react';
-
-import { View } from 'react-native';
-
+import { TouchableOpacity, Text, Image, List } from 'react-native';
 import styles from './styles';
 
-const zoneItem = () => {
-  return (
-    <View style={styles.container}>
+const ZoneItem = ({ zone }) => {
+  const newZone = zone.initialData;
+  console.tron.log({ images: newZone.images })
 
-    </View>
+  return (
+    <TouchableOpacity
+      onPress={() => { }}
+      style={styles.container}>
+      <Image style={styles.image} resizeMode={'contain'} source={{ uri: newZone.images[0].uri }} />
+
+      <Text style={styles.title}>{newZone.title}</Text>
+    </TouchableOpacity>
   );
 }
 
-export default zoneItem;
+export default ZoneItem;

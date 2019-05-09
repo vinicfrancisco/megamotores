@@ -20,7 +20,11 @@ export default function checklist(state = initialState, action) {
     case Types.ADD_IMAGE:
       return { ...state, images: [...state.images, action.payload.image] };
     case Types.SET_INITIAL_DATA:
-      return { ...state, initialData: action.payload.data };
+      let newData = {
+        ...action.payload.data,
+        images: state.images,
+      }
+      return { ...state, initialData: newData, images: [] };
     case Types.SET_INITIAL_HRN:
       return { ...state, initialHrn: action.payload.data };
     case Types.SET_REDUCTION:
@@ -33,7 +37,6 @@ export default function checklist(state = initialState, action) {
         initialHrn: state.initialHrn,
         reduction: state.reduction,
         finalhrn: state.finalhrn,
-        images: state.images,
       }
       return { ...state, dangerZones: [...state.dangerZones, newDangerZone] };
     default:
